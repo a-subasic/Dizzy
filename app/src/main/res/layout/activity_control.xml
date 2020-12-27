@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/ux_fragment"
+        android:name="com.google.ar.sceneform.ux.ArFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/black"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="50dp"
+        >
+        <Button
+            android:id="@+id/btn_left"
+            android:layout_width="40dp"
+            android:textSize="10sp"
+            android:layout_height="wrap_content"
+            android:text="L" />
+        <Button
+            android:id="@+id/btn_right"
+            android:layout_width="40dp"
+            android:textSize="10sp"
+            android:layout_height="wrap_content"
+            android:text="R" />
+        <Button
+            android:id="@+id/btn_up"
+            android:layout_width="50dp"
+            android:textSize="10sp"
+            android:layout_height="wrap_content"
+            android:text="UP" />
+        <Button
+            android:id="@+id/btn_down"
+            android:layout_width="70dp"
+            android:textSize="10sp"
+            android:layout_height="wrap_content"
+            android:text="DOWN" />
+        <Button
+            android:id="@+id/btn_rotate_left"
+            android:layout_width="90dp"
+            android:textSize="10sp"
+            android:layout_height="wrap_content"
+            android:text="ROTATE L" />
+        <Button
+            android:id="@+id/btn_rotate_right"
+            android:layout_width="90dp"
+            android:textSize="10sp"
+            android:layout_height="wrap_content"
+            android:text="ROTATE R" />
+    </LinearLayout>
+
+</FrameLayout>
