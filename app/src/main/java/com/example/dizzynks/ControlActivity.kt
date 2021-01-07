@@ -1,6 +1,7 @@
 package com.example.dizzynks
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -87,17 +88,20 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
 
                 val node = TransformableNode(arFragment!!.transformationSystem)
                 node.renderable = cubeRenderable
-                node.setParent(anchorNode)
+
 
                 arFragment!!.arSceneView.scene.addChild(anchorNode)
                 node.select()
 
                 if (nodeA == null) {
                     nodeA = node
+                    node.scaleController.isEnabled = false
                     arFragment!!.arSceneView.scene.addOnUpdateListener(this)
                 } else if (nodeB == null) {
                     nodeB = node
                 }
+
+                node.setParent(anchorNode)
             }
         }
     }
@@ -134,6 +138,8 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
     override fun onUpdate(frameTime: FrameTime) {
 
         if (nodeA != null && nodeB != null) {
+
+            Log.i("local scale", nodeA!!.localScale.toString())
 
             var node = arFragment!!.arSceneView.scene.overlapTest(nodeA)
 
@@ -175,12 +181,16 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
         try {
             currentPosition = Objects.requireNonNull(node.localPosition)
             if (moveMent == "zoom_out") {
-                move[currentPosition.x, (currentPosition.y - 0.1).toFloat()] = currentPosition.z
-                node.localPosition = move
+                if(node.localScale.x >= 0.1F) {
+                    val vector3 = Vector3(node.localScale.x - 0.1f, node.localScale.y - 0.1f, node.localScale.z - 0.1f)
+                    node.localScale = vector3
+                }
             }
             if (moveMent == "zoom_in") {
-                move[currentPosition.x, (currentPosition.y + 0.1).toFloat()] = currentPosition.z
-                node.localPosition = move
+                if(node.localScale.x <= 3.0F) {
+                    val vector3 = Vector3(node.localScale.x + 0.1f, node.localScale.y + 0.1f, node.localScale.z + 0.1f)
+                    node.localScale = vector3
+                }
             }
             if (moveMent == "right_move") {
                 move[(currentPosition.x + 0.1).toFloat(), currentPosition.y] = currentPosition.z
