@@ -1,6 +1,7 @@
 package com.example.dizzynks
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -20,6 +21,7 @@ import java.util.*
 class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
     private var arFragment: ArFragment? = null
     private var tvDistance: TextView? = null
+    private var timerValue: TextView? = null
     private var btnLeft: Button? = null
     private var btnRight: Button? = null
     private var btnUp: Button? = null
@@ -35,7 +37,15 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
     var greenMaterial: Material? = null
     var originalMaterial: Material? = null
 
-    var overlapIdle = true
+
+    var customHandler: Handler? = null
+
+    var startTime: Long = 0L
+    var timeInMiliseconds: Long = 0L
+    var timeSwapBuff: Long = 0L
+    var updateTime: Long = 0L
+
+    var overlapIdle = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -203,7 +213,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
             if (moveMent == "rotate_left") {
                 val q1: Quaternion = node.localRotation
                 val q2 =
-                    Quaternion.axisAngle(Vector3(0F, 1f, 0f), 2.0f)
+                    Quaternion.axisAngle(Vector3(0f, 1f, 0f), 2.0f)
                 node.localRotation = Quaternion.multiply(q1, q2)
             }
             if (moveMent == "rotate_right") {
