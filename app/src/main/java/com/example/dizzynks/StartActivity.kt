@@ -45,9 +45,15 @@ class StartActivity : AppCompatActivity() {
                 Options.size = selectedSize!!.text.toString()
                 Options.controls = switchControls!!.isChecked
 
-
-                val intent = Intent(this, DragActivity::class.java)
-                startActivity(intent)
+                // @TODO Save name, shape, size, controls on/off to logs
+                if(Options.controls) {
+                    val intent = Intent(this, ControlActivity::class.java)
+                    startActivity(intent)
+                }
+                else {
+                    val intent = Intent(this, DragActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
     }

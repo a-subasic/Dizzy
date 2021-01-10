@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.SystemClock
 import android.util.Log
 import android.widget.Button
-import android.widget.Chronometer
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -169,12 +168,7 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
         }
 
         btnNext1?.setOnClickListener {
-            if(level == 4) {
-                finish()
-            }
-            else {
-                levelUp()
-            }
+            levelUp()
         }
 
         btnRestart?.setOnClickListener {
@@ -285,10 +279,9 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
         btnNext1?.isEnabled = false
         btnNext1?.isClickable = false
 
-        initModel()
-
         Log.i("time", chronometer?.text.toString())
         Log.i("miliseconds", tMiliSec.toString())
+        // @TODO Save level and miliseconds to logs
         tMiliSec = 0L
         tStart = 0L
         sec = 0
@@ -296,6 +289,14 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
         miliSec = 0
         chronometer?.text = "00:00:000"
         handler.removeCallbacks(UpdateTimer)
+
+        if(level == 5) {
+            finish()
+        }
+
+        else {
+            initModel()
+        }
     }
 
     override fun onUpdate(frameTime: FrameTime) {
