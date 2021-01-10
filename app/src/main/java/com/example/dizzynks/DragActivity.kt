@@ -49,6 +49,10 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
     private var sizeNodeB: Float = 0f
     private var distanceMeters: Float = 0f
 
+    private var distanceFormatted: String = String()
+    private var scaleFormatted: String = String()
+    private var rotationFormatted: String = String()
+
     companion object {
         var handler: Handler = Handler()
         var tMiliSec: Long = 0L
@@ -282,6 +286,8 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
         Log.i("time", chronometer?.text.toString())
         Log.i("miliseconds", tMiliSec.toString())
         // @TODO Save level and miliseconds to logs
+        val levelTmp = level - 1
+        Logs.data += Options.name + "," + Options.shape + "," + Options.size + ","+ Options.controls + "," + levelTmp + "," + tMiliSec + "\n"
         tMiliSec = 0L
         tStart = 0L
         sec = 0
@@ -315,8 +321,8 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
             distanceMeters = kotlin.math.sqrt((dx * dx + dy * dy + dz * dz).toDouble()).toFloat()
 
             val isNodesDistanceEqual = ("%.2f").format(distanceMeters) == "0.00"
-            val isNodesSizeEqual = ("%.2f").format(finalSizeB!!.x) == ("%.2f").format(finalSizeA!!.x)
-            val isNodesRotationEqual = ("%.2f").format(nodeA!!.worldRotation.y) == ("%.2f").format(nodeB!!.worldRotation.y)
+            val isNodesSizeEqual = ("%.2f").format(finalSizeB!!.x) == ("%.2f").format(finalSizeA!!.x) || scaleFormatted == "0.00"
+            val isNodesRotationEqual = ("%.2f").format(nodeA!!.worldRotation.y) == ("%.2f").format(nodeB!!.worldRotation.y) || rotationFormatted == "0.00"
 
             if (level == 1 && isNodesDistanceEqual ||
                 level == 2 && isNodesDistanceEqual && isNodesSizeEqual ||
@@ -329,6 +335,11 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
                 btnNext1?.isClickable = true
             }
             else {
+                Log.i("rotation", distanceMeters.toString())
+                Log.i("distance bool", isNodesDistanceEqual.toString())
+                Log.i("rotation", isNodesRotationEqual.toString())
+                Log.i("distance", isNodesSizeEqual.toString())
+
                 nodeA!!.renderable!!.material = originalMaterial
                 nodeB!!.renderable!!.material = redMaterial
 
@@ -352,14 +363,14 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
     }
 
     private fun displayValues() {
-        val distanceFormatted = String.format("%.2f", distanceMeters)
+        distanceFormatted = String.format("%.2f", distanceMeters)
 
-        val scaleFormatted = if(String.format("%.2f", finalSizeB!!.x - finalSizeA!!.x) == "-0.00") "0.00"
+        scaleFormatted = if(String.format("%.2f", finalSizeB!!.x - finalSizeA!!.x) == "-0.00") "0.00"
                              else String.format("%.2f", finalSizeB!!.x - finalSizeA!!.x)
 
-        val rotationFormatted = if(String.format("%.2f", nodeA!!.worldRotation.y - nodeB!!.worldRotation.y) == "-0.00") "0.00"
+        rotationFormatted = if(String.format("%.2f", nodeA!!.worldRotation.y - nodeB!!.worldRotation.y) == "-0.00") "0.00"
                                 else String.format("%.2f", nodeA!!.worldRotation.y - nodeB!!.worldRotation.y)
 
-        tvDistance!!.text = "Distance between nodes: $distanceFormatted meters, scale $scaleFormatted, rotation $rotationFormatted"
+        tvDistance!!.text = "distance: $distanceFormatted meters, scale $scaleFormatted, rotation $rotationFormatted"
     }
 }

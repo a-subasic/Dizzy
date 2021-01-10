@@ -4,6 +4,8 @@
     package="com.example.dizzynks">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.camera.ar"
@@ -35,6 +37,16 @@
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.dizzynks.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

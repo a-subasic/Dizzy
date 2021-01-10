@@ -23,14 +23,13 @@
         android:id="@+id/et_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="92dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Name"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-
 
     <TextView
         android:id="@+id/textView2"
@@ -121,7 +120,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rg_size"
-        app:layout_constraintVertical_bias="0.728" />
+        app:layout_constraintVertical_bias="0.691" />
 
     <Switch
         android:id="@+id/switch_controls"
