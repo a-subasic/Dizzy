@@ -6,19 +6,20 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.ar.core.Pose
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.FrameTime
-import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.Scene
 import com.google.ar.sceneform.collision.Box
+import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.*
-import com.google.ar.sceneform.ux.*
+import com.google.ar.sceneform.ux.ArFragment
+import com.google.ar.sceneform.ux.TransformableNode
 import java.util.*
 
 
@@ -48,8 +49,13 @@ class MainActivity : AppCompatActivity(), Scene.OnUpdateListener {
 
         setContentView(R.layout.activity_main)
 
+        Log.i("shape", Options.shape)
+        Log.i("size", Options.size)
+        Log.i("size", Options.controls.toString())
+
         arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment?
         tvDistance = findViewById(R.id.tvDistance)
+
         btnNext1 = findViewById(R.id.btn_next1)
         btnNext1?.isEnabled = false
         btnNext1?.isClickable = false
@@ -61,7 +67,7 @@ class MainActivity : AppCompatActivity(), Scene.OnUpdateListener {
             if (cubeRenderableA != null && cubeRenderableB !== null) {
 
                 val anchor = hitResult.createAnchor()
-                val anchorNode = AnchorNode(anchor)
+                var anchorNode = AnchorNode(anchor)
                 anchorNode.setParent(arFragment!!.arSceneView.scene)
 
                 if (nodeA != null && nodeB != null) {
@@ -69,22 +75,32 @@ class MainActivity : AppCompatActivity(), Scene.OnUpdateListener {
                 }
 
                 val node = TransformableNode(arFragment!!.transformationSystem)
+                val node2 = TransformableNode(arFragment!!.transformationSystem)
+
+                val anchor2 = hitResult.trackable.createAnchor(hitResult.hitPose.compose(Pose.makeTranslation(0.2F, 0F, 0F)))
+                var anchorNode2 = AnchorNode(anchor2)
+                anchorNode2.setParent(arFragment!!.arSceneView.scene)
 
                 arFragment!!.arSceneView.scene.addChild(anchorNode)
+                arFragment!!.arSceneView.scene.addChild(anchorNode2)
+
                 node.select()
+                node2.renderable = cubeRenderableB
 
                 if (nodeA == null) {
                     nodeA = node
                     node.renderable = cubeRenderableA
                     node.scaleController.isEnabled = false
                     arFragment!!.arSceneView.scene.addOnUpdateListener(this)
-                } else if (nodeB == null) {
-                    node.renderable = cubeRenderableB
+                }
+                if (nodeB == null) {
+                    node2.renderable = cubeRenderableB
                     node.scaleController.minScale = 0.05f
-                    nodeB = node
+                    nodeB = node2
                 }
 
                 node.setParent(anchorNode)
+                node2.setParent(anchorNode2)
             }
         }
 
@@ -95,17 +111,30 @@ class MainActivity : AppCompatActivity(), Scene.OnUpdateListener {
     }
 
     private fun initModel() {
+//        MaterialFactory.makeOpaqueWithColor(this, Color(android.graphics.Color.))
+//            .thenAccept { material ->
+//                greenMaterial = material
+//            }
+
         MaterialFactory.makeOpaqueWithColor(this, Color(android.graphics.Color.GREEN))
             .thenAccept { material ->
                 greenMaterial = material
             }
 
-        MaterialFactory.makeOpaqueWithColor(this, Color(android.graphics.Color.RED))
+        MaterialFactory.makeTransparentWithColor(this, Color(android.graphics.Color.argb(200,20,20, 20)))
             .thenAccept { material ->
-                val vector3a = Vector3(0.05f, 0.05f, 0.05f)
+                val vector3a = Vector3(0.07f, 0.07f, 0.07f)
                 val vector3b = Vector3(0.07f, 0.07f, 0.07f)
                 cubeRenderableA = ShapeFactory.makeCube(vector3a, Vector3.zero(), material)
+
+//                cubeRenderableA = ShapeFactory.makeCylinder(0.1f, 0.3f, Vector3.zero(), material)
+
+//                cubeRenderableA = ShapeFactory.makeSphere(0.1f, Vector3.zero(), material)
+
                 cubeRenderableB = ShapeFactory.makeCube(vector3b, Vector3.zero(), material)
+//                cubeRenderableB = ShapeFactory.makeSphere(0.1f, Vector3.zero(), material)
+
+
                 originalMaterial = material
 
                 cubeRenderableA!!.isShadowCaster = false
@@ -143,6 +172,10 @@ class MainActivity : AppCompatActivity(), Scene.OnUpdateListener {
     override fun onUpdate(frameTime: FrameTime) {
 
         if (nodeA != null && nodeB != null) {
+//            Log.i("world rotationA", nodeA!!.worldRotation.toString())
+//            Log.i("world rotationB", nodeB!!.worldRotation.toString())
+//            Log.i("local rotationA", nodeA!!.localRotation.toString())
+//            Log.i("local rotationB", nodeB!!.localRotation.toString())
 
             val box: Box = nodeB!!.renderable?.collisionShape as Box
             val renderableSize: Vector3 = box.size
@@ -178,7 +211,18 @@ class MainActivity : AppCompatActivity(), Scene.OnUpdateListener {
             val distanceFormatted = String.format("%.2f", distanceMeters)
 
             if (node != null) {
-                if (("%.2f").format(distanceMeters) == "0.00" && ("%.3f").format(finalSizeB!!.x) == ("%.3f").format(finalSizeA!!.x)) {
+//                if (("%.2f").format(distanceMeters) == "0.00" && ("%.3f").format(finalSizeB!!.x) == ("%.3f").format(finalSizeA!!.x)) {
+//                    nodeA!!.renderable!!.material = greenMaterial
+//                    nodeB!!.renderable!!.material = greenMaterial
+//                    btnNext1?.isEnabled = true
+//                    btnNext1?.isClickable = true
+//                }
+                val q1: Quaternion = nodeA!!.localRotation
+                val q2: Quaternion = nodeB!!.localRotation
+                Log.i("local rotationA", q1.toString())
+                Log.i("local rotationB", q2.toString())
+
+                if (("%.2f").format(nodeA!!.worldRotation.y) == ("%.2f").format(nodeB!!.worldRotation.y)) {
                     nodeA!!.renderable!!.material = greenMaterial
                     nodeB!!.renderable!!.material = greenMaterial
                     btnNext1?.isEnabled = true
@@ -187,6 +231,9 @@ class MainActivity : AppCompatActivity(), Scene.OnUpdateListener {
                 else {
                     nodeA!!.renderable!!.material = originalMaterial
                     nodeB!!.renderable!!.material = originalMaterial
+
+                    btnNext1?.isEnabled = false
+                    btnNext1?.isClickable = false
                 }
             }
 

@@ -4,6 +4,8 @@
     package="com.example.dizzynks">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.camera.ar"
@@ -20,21 +22,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DizzyNKS"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ControlActivity">
+        <activity android:name=".DragActivity"></activity>
+        <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ControlActivity" />
         <activity android:name=".ShootActivity" />
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
 
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.dizzynks.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

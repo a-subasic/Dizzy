@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.157" />
+
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Shape"
+        app:layout_constraintBottom_toTopOf="@+id/rg_shape"
+        app:layout_constraintEnd_toEndOf="@+id/rg_shape"
+        app:layout_constraintStart_toStartOf="@+id/rg_shape" />
+
+    <RadioGroup
+        android:id="@+id/rg_shape"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:checkedButton="@id/rb_cube"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_name">
+
+        <RadioButton
+            android:id="@+id/rb_cube"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cube" />
+
+        <RadioButton
+            android:id="@+id/rb_cylinder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cylinder" />
+
+        <RadioButton
+            android:id="@+id/rb_sphere"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sphere" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Size"
+        app:layout_constraintBottom_toTopOf="@+id/rg_size"
+        app:layout_constraintEnd_toEndOf="@+id/rg_size"
+        app:layout_constraintStart_toStartOf="@+id/rg_size" />
+
+    <RadioGroup
+        android:id="@+id/rg_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:checkedButton="@id/rb_l"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rg_shape">
+
+        <RadioButton
+            android:id="@+id/rb_l"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Large" />
+
+        <RadioButton
+            android:id="@+id/rb_m"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Medium" />
+
+        <RadioButton
+            android:id="@+id/rb_s"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Small" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="START"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rg_size"
+        app:layout_constraintVertical_bias="0.691" />
+
+    <Switch
+        android:id="@+id/switch_controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Controls"
+        app:layout_constraintBottom_toTopOf="@+id/btn_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rg_size" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
