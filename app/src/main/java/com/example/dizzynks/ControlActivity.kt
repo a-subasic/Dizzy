@@ -439,7 +439,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
 
 
     private fun initModel() {
-        sizeNodeA = if(Options.size == "Large") 0.3f else if (Options.size == "Medium") 0.15f else 0.08f
+        sizeNodeA = if(Options.size == "Large") 0.2f else if (Options.size == "Medium") 0.1f else 0.05f
         if(level%2 != 0) sizeNodeB = sizeNodeA
 
         MaterialFactory.makeOpaqueWithColor(this, Color(android.graphics.Color.GREEN))
