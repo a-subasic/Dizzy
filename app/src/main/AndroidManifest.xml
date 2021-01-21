@@ -31,8 +31,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ControlActivity" />
-        <activity android:name=".ShootActivity" />
-        <activity android:name=".MainActivity"></activity>
 
         <meta-data
             android:name="com.google.ar.core"

@@ -89,10 +89,10 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
 
         initModel()
 
-        arFragment!!.setOnTapArPlaneListener { hitResult, plane, motionEvent ->
 
-            if (shapeRenderableA != null && shapeRenderableB !== null && nodeA == null && nodeB == null) {
+        arFragment?.setOnTapArPlaneListener { hitResult, plane, motionEvent ->
 
+            if (shapeRenderableA != null && shapeRenderableB != null && nodeA == null && nodeB == null) {
                 val anchor = hitResult.createAnchor()
                 var anchorNode = AnchorNode(anchor)
                 anchorNode.setParent(arFragment!!.arSceneView.scene)
@@ -193,11 +193,21 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
     }
 
     private fun clearAnchors() {
+        tMiliSec = 0L
+        tStart = 0L
+        sec = 0
+        min = 0
+        miliSec = 0
+        chronometer?.text = "00:00:000"
+        handler.removeCallbacks(UpdateTimer)
+
         btnRestart?.isEnabled = false
         btnRestart?.isClickable = false
 
-        arFragment!!.arSceneView.scene.removeChild(nodeA!!.parent!!)
-        arFragment!!.arSceneView.scene.removeChild(nodeB!!.parent!!)
+        if(arFragment != null && nodeA != null && nodeB != null) {
+            arFragment!!.arSceneView.scene.removeChild(nodeA!!.parent!!)
+            arFragment!!.arSceneView.scene.removeChild(nodeB!!.parent!!)
+        }
 
         nodeA = null
         nodeB = null
@@ -274,8 +284,10 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
             btnNext1!!.text = "Finish"
         }
 
-        arFragment!!.arSceneView.scene.removeChild(nodeA!!.parent!!)
-        arFragment!!.arSceneView.scene.removeChild(nodeB!!.parent!!)
+        if(arFragment != null && nodeA != null && nodeB != null) {
+            arFragment!!.arSceneView.scene.removeChild(nodeA!!.parent!!)
+            arFragment!!.arSceneView.scene.removeChild(nodeB!!.parent!!)
+        }
 
         nodeA = null
         nodeB = null
@@ -283,9 +295,6 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
         btnNext1?.isEnabled = false
         btnNext1?.isClickable = false
 
-        Log.i("time", chronometer?.text.toString())
-        Log.i("miliseconds", tMiliSec.toString())
-        // @TODO Save level and miliseconds to logs
         val levelTmp = level - 1
         Logs.data += Options.name + "," + Options.shape + "," + Options.size + ","+ Options.controls + "," + levelTmp + "," + tMiliSec + "\n"
         tMiliSec = 0L
@@ -297,12 +306,29 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
         handler.removeCallbacks(UpdateTimer)
 
         if(level == 5) {
-            finish()
+            btnRestart?.isEnabled = false
+            btnRestart?.isClickable = false
+            Handler().postDelayed(
+                    { finish() },
+                    1500)
         }
 
         else {
             initModel()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        nodeA = null
+        nodeB = null
+        tMiliSec = 0L
+        tStart = 0L
+        sec = 0
+        min = 0
+        miliSec = 0
+        chronometer?.text = "00:00:000"
+        handler.removeCallbacks(UpdateTimer)
     }
 
     override fun onUpdate(frameTime: FrameTime) {
@@ -320,9 +346,9 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
             //Computing a straight-line distance.
             distanceMeters = kotlin.math.sqrt((dx * dx + dy * dy + dz * dz).toDouble()).toFloat()
 
-            val isNodesDistanceEqual = ("%.2f").format(distanceMeters) == "0.00"
-            val isNodesSizeEqual = ("%.2f").format(finalSizeB!!.x) == ("%.2f").format(finalSizeA!!.x) || scaleFormatted == "0.00"
-            val isNodesRotationEqual = ("%.2f").format(nodeA!!.worldRotation.y) == ("%.2f").format(nodeB!!.worldRotation.y) || rotationFormatted == "0.00"
+            val isNodesDistanceEqual = ("%.2f").format(distanceMeters) == "0.00" || ("%.2f").format(distanceMeters) == "0,00"
+            val isNodesSizeEqual = ("%.2f").format(finalSizeB!!.x) == ("%.2f").format(finalSizeA!!.x) || scaleFormatted == "0.00" || scaleFormatted == "0,00"
+            val isNodesRotationEqual = rotationFormatted == "0.00" || rotationFormatted == "0,00"
 
             if (level == 1 && isNodesDistanceEqual ||
                 level == 2 && isNodesDistanceEqual && isNodesSizeEqual ||
@@ -335,11 +361,6 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
                 btnNext1?.isClickable = true
             }
             else {
-                Log.i("rotation", distanceMeters.toString())
-                Log.i("distance bool", isNodesDistanceEqual.toString())
-                Log.i("rotation", isNodesRotationEqual.toString())
-                Log.i("distance", isNodesSizeEqual.toString())
-
                 nodeA!!.renderable!!.material = originalMaterial
                 nodeB!!.renderable!!.material = redMaterial
 
@@ -366,10 +387,12 @@ class DragActivity : AppCompatActivity(), Scene.OnUpdateListener {
         distanceFormatted = String.format("%.2f", distanceMeters)
 
         scaleFormatted = if(String.format("%.2f", finalSizeB!!.x - finalSizeA!!.x) == "-0.00") "0.00"
-                             else String.format("%.2f", finalSizeB!!.x - finalSizeA!!.x)
+        else if (String.format("%.2f", finalSizeB!!.x - finalSizeA!!.x) == "-0,00") "0,00"
+        else String.format("%.2f", finalSizeB!!.x - finalSizeA!!.x)
 
         rotationFormatted = if(String.format("%.2f", nodeA!!.worldRotation.y - nodeB!!.worldRotation.y) == "-0.00") "0.00"
-                                else String.format("%.2f", nodeA!!.worldRotation.y - nodeB!!.worldRotation.y)
+        else if (String.format("%.2f", nodeA!!.worldRotation.y - nodeB!!.worldRotation.y) == "-0,00") "0,00"
+        else String.format("%.2f", nodeA!!.worldRotation.y - nodeB!!.worldRotation.y)
 
         tvDistance!!.text = "distance: $distanceFormatted meters, scale $scaleFormatted, rotation $rotationFormatted"
     }

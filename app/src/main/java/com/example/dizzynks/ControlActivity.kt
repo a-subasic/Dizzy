@@ -71,8 +71,6 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
         var min: Int = 0
         var miliSec: Int = 0
         private var chronometer: TextView? = null
-
-        private const val MIN_OPENGL_VERSION = 3.0
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -114,7 +112,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
                     MotionEvent.ACTION_DOWN -> {
                         if (mHandler != null) return true
                         mHandler = Handler()
-                        mHandler!!.postDelayed(mAction, 100)
+                        mHandler!!.postDelayed(mAction, 50)
                     }
                     MotionEvent.ACTION_UP -> {
                         if (mHandler == null) return true
@@ -128,7 +126,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
             var mAction: Runnable = object : Runnable {
                 override fun run() {
                     nodeB?.let { it1 -> modelMovement(it1, "left_move") }
-                    mHandler!!.postDelayed(this, 100)
+                    mHandler!!.postDelayed(this, 50)
                 }
             }
         })
@@ -143,7 +141,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
                     MotionEvent.ACTION_DOWN -> {
                         if (mHandler != null) return true
                         mHandler = Handler()
-                        mHandler!!.postDelayed(mAction, 100)
+                        mHandler!!.postDelayed(mAction, 50)
                     }
                     MotionEvent.ACTION_UP -> {
                         if (mHandler == null) return true
@@ -157,7 +155,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
             var mAction: Runnable = object : Runnable {
                 override fun run() {
                     nodeB?.let { it1 -> modelMovement(it1, "right_move") }
-                    mHandler!!.postDelayed(this, 100)
+                    mHandler!!.postDelayed(this, 50)
                 }
             }
         })
@@ -172,7 +170,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
                     MotionEvent.ACTION_DOWN -> {
                         if (mHandler != null) return true
                         mHandler = Handler()
-                        mHandler!!.postDelayed(mAction, 100)
+                        mHandler!!.postDelayed(mAction, 50)
                     }
                     MotionEvent.ACTION_UP -> {
                         if (mHandler == null) return true
@@ -186,10 +184,11 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
             var mAction: Runnable = object : Runnable {
                 override fun run() {
                     nodeB?.let { it1 -> modelMovement(it1, "up") }
-                    mHandler!!.postDelayed(this, 100)
+                    mHandler!!.postDelayed(this, 50)
                 }
             }
         })
+
         btnDown!!.setOnClickListener {
             nodeB?.let { it1 -> modelMovement(it1, "down") }
         }
@@ -200,7 +199,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
                     MotionEvent.ACTION_DOWN -> {
                         if (mHandler != null) return true
                         mHandler = Handler()
-                        mHandler!!.postDelayed(mAction, 100)
+                        mHandler!!.postDelayed(mAction, 50)
                     }
                     MotionEvent.ACTION_UP -> {
                         if (mHandler == null) return true
@@ -214,10 +213,11 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
             var mAction: Runnable = object : Runnable {
                 override fun run() {
                     nodeB?.let { it1 -> modelMovement(it1, "down") }
-                    mHandler!!.postDelayed(this, 100)
+                    mHandler!!.postDelayed(this, 50)
                 }
             }
         })
+
         btnZoomIn!!.setOnClickListener {
             nodeB?.let { it1 -> modelMovement(it1, "zoom_in") }
         }
@@ -228,7 +228,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
                     MotionEvent.ACTION_DOWN -> {
                         if (mHandler != null) return true
                         mHandler = Handler()
-                        mHandler!!.postDelayed(mAction, 100)
+                        mHandler!!.postDelayed(mAction, 50)
                     }
                     MotionEvent.ACTION_UP -> {
                         if (mHandler == null) return true
@@ -242,10 +242,11 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
             var mAction: Runnable = object : Runnable {
                 override fun run() {
                     nodeB?.let { it1 -> modelMovement(it1, "zoom_in") }
-                    mHandler!!.postDelayed(this, 100)
+                    mHandler!!.postDelayed(this, 50)
                 }
             }
         })
+
         btnZoomOut!!.setOnClickListener {
             nodeB?.let { it1 -> modelMovement(it1, "zoom_out") }
         }
@@ -256,7 +257,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
                     MotionEvent.ACTION_DOWN -> {
                         if (mHandler != null) return true
                         mHandler = Handler()
-                        mHandler!!.postDelayed(mAction, 100)
+                        mHandler!!.postDelayed(mAction, 50)
                     }
                     MotionEvent.ACTION_UP -> {
                         if (mHandler == null) return true
@@ -270,10 +271,11 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
             var mAction: Runnable = object : Runnable {
                 override fun run() {
                     nodeB?.let { it1 -> modelMovement(it1, "zoom_out") }
-                    mHandler!!.postDelayed(this, 100)
+                    mHandler!!.postDelayed(this, 50)
                 }
             }
         })
+
         btnRotateLeft!!.setOnClickListener {
             nodeB?.let { it1 -> modelMovement(it1, "rotate_left") }
         }
@@ -284,7 +286,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
                     MotionEvent.ACTION_DOWN -> {
                         if (mHandler != null) return true
                         mHandler = Handler()
-                        mHandler!!.postDelayed(mAction, 100)
+                        mHandler!!.postDelayed(mAction, 50)
                     }
                     MotionEvent.ACTION_UP -> {
                         if (mHandler == null) return true
@@ -298,10 +300,11 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
             var mAction: Runnable = object : Runnable {
                 override fun run() {
                     nodeB?.let { it1 -> modelMovement(it1, "rotate_left") }
-                    mHandler!!.postDelayed(this, 100)
+                    mHandler!!.postDelayed(this, 50)
                 }
             }
         })
+
         btnRotateRight!!.setOnClickListener {
             nodeB?.let { it1 -> modelMovement(it1, "rotate_right") }
         }
@@ -312,7 +315,7 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
                     MotionEvent.ACTION_DOWN -> {
                         if (mHandler != null) return true
                         mHandler = Handler()
-                        mHandler!!.postDelayed(mAction, 100)
+                        mHandler!!.postDelayed(mAction, 50)
                     }
                     MotionEvent.ACTION_UP -> {
                         if (mHandler == null) return true
@@ -326,14 +329,15 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
             var mAction: Runnable = object : Runnable {
                 override fun run() {
                     nodeB?.let { it1 -> modelMovement(it1, "rotate_right") }
-                    mHandler!!.postDelayed(this, 100)
+                    mHandler!!.postDelayed(this, 50)
                 }
             }
         })
 
-        arFragment!!.setOnTapArPlaneListener { hitResult, plane, motionEvent ->
-            if (shapeRenderableA != null && shapeRenderableB !== null && nodeA == null && nodeB == null) {
 
+        arFragment?.setOnTapArPlaneListener { hitResult, plane, motionEvent ->
+
+            if (shapeRenderableA != null && shapeRenderableB != null && nodeA == null && nodeB == null) {
                 val anchor = hitResult.createAnchor()
                 var anchorNode = AnchorNode(anchor)
                 anchorNode.setParent(arFragment!!.arSceneView.scene)
@@ -427,8 +431,18 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
     }
 
     private fun clearAnchors() {
-        btnRestart?.isEnabled = false
-        btnRestart?.isClickable = false
+        tMiliSec = 0L
+        tStart = 0L
+        sec = 0
+        min = 0
+        miliSec = 0
+        chronometer?.text = "00:00:000"
+        handler.removeCallbacks(UpdateTimer)
+
+        if(arFragment != null && nodeA != null && nodeB != null) {
+            arFragment!!.arSceneView.scene.removeChild(nodeA!!.parent!!)
+            arFragment!!.arSceneView.scene.removeChild(nodeB!!.parent!!)
+        }
 
         arFragment!!.arSceneView.scene.removeChild(nodeA!!.parent!!)
         arFragment!!.arSceneView.scene.removeChild(nodeB!!.parent!!)
@@ -495,8 +509,10 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
             btnNext1!!.text = "Finish"
         }
 
-        arFragment!!.arSceneView.scene.removeChild(nodeA!!.parent!!)
-        arFragment!!.arSceneView.scene.removeChild(nodeB!!.parent!!)
+        if(arFragment != null && nodeA != null && nodeB != null) {
+           arFragment!!.arSceneView.scene.removeChild(nodeA!!.parent!!)
+           arFragment!!.arSceneView.scene.removeChild(nodeB!!.parent!!)
+        }
 
         nodeA = null
         nodeB = null
@@ -504,9 +520,6 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
         btnNext1?.isEnabled = false
         btnNext1?.isClickable = false
 
-        Log.i("time", chronometer?.text.toString())
-        Log.i("miliseconds", tMiliSec.toString())
-        // @TODO Save level and miliseconds to logs
         val levelTmp = level - 1
         Logs.data += Options.name + "," + Options.shape + "," + Options.size + ","+ Options.controls + "," + levelTmp + "," + tMiliSec + "\n"
         tMiliSec = 0L
@@ -518,12 +531,29 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
         handler.removeCallbacks(UpdateTimer)
 
         if(level == 5) {
-           finish()
+            btnRestart?.isEnabled = false
+            btnRestart?.isClickable = false
+            Handler().postDelayed(
+                    { finish() },
+                    1500)
         }
 
         else {
             initModel()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        nodeA = null
+        nodeB = null
+        tMiliSec = 0L
+        tStart = 0L
+        sec = 0
+        min = 0
+        miliSec = 0
+        chronometer?.text = "00:00:000"
+        handler.removeCallbacks(DragActivity.UpdateTimer)
     }
 
 
@@ -542,9 +572,9 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
             //Computing a straight-line distance.
             distanceMeters = kotlin.math.sqrt((dx * dx + dy * dy + dz * dz).toDouble()).toFloat()
 
-            val isNodesDistanceEqual = ("%.2f").format(distanceMeters) == "0.00"
-            val isNodesSizeEqual = ("%.2f").format(finalSizeB!!.x) == ("%.2f").format(finalSizeA!!.x) || scaleFormatted == "0.00"
-            val isNodesRotationEqual = ("%.2f").format(nodeA!!.worldRotation.y) == ("%.2f").format(nodeB!!.worldRotation.y) || rotationFormatted == "0.00"
+            val isNodesDistanceEqual = ("%.2f").format(distanceMeters) == "0.00" || ("%.2f").format(distanceMeters) == "0,00"
+            val isNodesSizeEqual = ("%.2f").format(finalSizeB!!.x) == ("%.2f").format(finalSizeA!!.x) || scaleFormatted == "0.00" || scaleFormatted == "0,00"
+            val isNodesRotationEqual = rotationFormatted == "0.00" || rotationFormatted == "0,00"
 
             if (level == 1 && isNodesDistanceEqual ||
                     level == 2 && isNodesDistanceEqual && isNodesSizeEqual ||
@@ -557,10 +587,6 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
                 btnNext1?.isClickable = true
             }
             else {
-                Log.i("distance", distanceMeters.toString())
-                Log.i("distance bool", isNodesDistanceEqual.toString())
-                Log.i("rotation", isNodesRotationEqual.toString())
-                Log.i("distance", isNodesSizeEqual.toString())
                 nodeA!!.renderable!!.material = originalMaterial
                 nodeB!!.renderable!!.material = redMaterial
 
@@ -584,12 +610,14 @@ class ControlActivity : AppCompatActivity(), Scene.OnUpdateListener {
     }
 
     private fun displayValues() {
-        val distanceFormatted = String.format("%.2f", distanceMeters)
+        distanceFormatted = String.format("%.2f", distanceMeters)
 
-        val scaleFormatted = if(String.format("%.2f", finalSizeB!!.x - finalSizeA!!.x) == "-0.00") "0.00"
+        scaleFormatted = if(String.format("%.2f", finalSizeB!!.x - finalSizeA!!.x) == "-0.00") "0.00"
+        else if (String.format("%.2f", finalSizeB!!.x - finalSizeA!!.x) == "-0,00") "0,00"
         else String.format("%.2f", finalSizeB!!.x - finalSizeA!!.x)
 
-        val rotationFormatted = if(String.format("%.2f", nodeA!!.worldRotation.y - nodeB!!.worldRotation.y) == "-0.00") "0.00"
+        rotationFormatted = if(String.format("%.2f", nodeA!!.worldRotation.y - nodeB!!.worldRotation.y) == "-0.00") "0.00"
+        else if (String.format("%.2f", nodeA!!.worldRotation.y - nodeB!!.worldRotation.y) == "-0,00") "0,00"
         else String.format("%.2f", nodeA!!.worldRotation.y - nodeB!!.worldRotation.y)
 
         tvDistance!!.text = "distance: $distanceFormatted meters, scale $scaleFormatted, rotation $rotationFormatted"

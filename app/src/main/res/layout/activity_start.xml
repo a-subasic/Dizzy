@@ -62,12 +62,16 @@
             android:id="@+id/rb_cylinder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="false"
+            android:visibility="invisible"
             android:text="Cylinder" />
 
         <RadioButton
             android:id="@+id/rb_sphere"
             android:layout_width="match_parent"
+            android:visibility="invisible"
             android:layout_height="wrap_content"
+            android:clickable="false"
             android:text="Sphere" />
     </RadioGroup>
 
